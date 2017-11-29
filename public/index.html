@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Index</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="styleSheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css" />
+	
+</head> 
+<body>
+
+	<script type="text/javascript">
+	
+		var category = ["Sports","Travel","Tech","Entertainment","Health","Politics"];
+		var apnd = 0;
+		var newArray = new Array();
+		var selArray = new Array(), b = 0;
+	
+		$( document ).ready(function() 
+		{
+            
+            $('.sel').click(function()
+			{
+             	if($(this).attr("id") == "1")
+				{
+					newArray.push(category[5]);
+				}
+				if($(this).attr("id") == "2")
+				{
+					newArray.push(category[4]);
+				}
+				
+				if($(this).attr("id") == "3")
+				{
+					newArray.push(category[3]);
+				}
+				if($(this).attr("id") == "4")
+				{
+					newArray.push(category[2]);
+				}
+				if($(this).attr("id") == "5")
+				{
+					newArray.push(category[1]);
+				}
+				if($(this).attr("id") == "6")
+				{
+					newArray.push(category[0]);
+				}
+								
+			
+				for (var i = 0; i < newArray.length; i++ )
+				{
+					var current = newArray[i]; // get a value from the original array
+					
+					for (var j = 0; j < selArray.length; j++ )
+					{ // loop and check if value is in new array 
+						if ( current != selArray[j] ) 
+						{
+							b++;
+						}
+					}
+					if ( b == selArray.length ) 
+					{ // if the counter increased on all values 
+					  // then its not in the new array yet
+						selArray.push( current ); // put it in
+					}
+					else
+					{
+						alert("This Category is already selected in your list");
+					}
+
+					b = 0; // reset counter
+				}	
+			
+				newArray.length = 0; // after new array is finished creating delete the original array
+				
+				if(selArray.length > 3)
+				{
+					alert("You have reached the maximum selection of Categories")
+					selArray.pop($(this).val());
+					selArray.sort();
+					alert("newArray contents = "+ selArray);
+					$(".cat_img").hide();
+					//<input type=button value="Click" onClick="window.open('myFinal.html')">
+					
+					
+				}
+				else
+				{	
+				
+					$(".selectedCategories").show(); 		
+					
+					if(selArray[apnd] == "Politics")
+					{
+						 var btn= $('<input id = "cat_btn1" type="button" value="Politics"/>');
+
+						$(".selectedCategories").append(btn); 
+						apnd++;
+						document.getElementById("cat_btn1").className = "cat_btn1";
+					}
+					if(selArray[apnd] == "Health")
+					{
+						 var btn= $('<input id = "cat_btn2" type="button" value="Health"/>');
+
+						$(".selectedCategories").append(btn); 
+						apnd++;
+						document.getElementById("cat_btn2").className = "cat_btn2";
+					}
+					if(selArray[apnd] == "Entertainment")
+					{
+						 var btn= $('<input id = "cat_btn3" type="button" value="Entertainment"/>');
+						 
+						$(".selectedCategories").append(btn); 
+						apnd++;
+						document.getElementById("cat_btn3").className = "cat_btn3";
+					}
+					if(selArray[apnd] == "Tech")
+					{
+						 var btn= $('<input id = "cat_btn4" type="button" value="Tech"/>');
+						 
+						$(".selectedCategories").append(btn); 
+						apnd++;
+						document.getElementById("cat_btn4").className = "cat_btn4";
+					}
+					
+					if(selArray[apnd] == "Travel")
+					{
+						 var btn= $('<input id = "cat_btn5" type="button" value="Travel"/>');
+						 
+						$(".selectedCategories").append(btn); 
+						apnd++;
+						document.getElementById("cat_btn5").className = "cat_btn5";
+					}
+					if(selArray[apnd] == "Sports")
+					{
+						 var btn= $('<input id = "cat_btn6" type="button" value="Sports"/>');
+						 
+						$(".selectedCategories").append(btn); 
+						apnd++;
+						document.getElementById("cat_btn6").className = "cat_btn6";
+					}
+					
+					
+					
+
+				}
+				
+								
+			});
+			
+			$('.edit_button').click(function()
+			{
+			
+				selArray = [];
+				newArray = [];
+				$(".selectedCategories").empty(); 
+				apnd = 0;
+				b = 0;
+				if($(".cat_img").hide())
+				{
+					$(".cat_img").show();
+				}
+			
+			});
+			
+		});
+		
+		
+		function xferArray()
+		{
+			myArray = new Array();
+			myArray = selArray;
+		}
+</script>
+	
+	
+	<div class="container cat_img">
+		
+		<h1> Select your favourite three News Categories from list of categories from below </h1>
+	
+		<div class="row">
+
+			<figure id = "1"class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+				<img src="3.jpg" alt="This is my work" class="img-responsive img-category"  value = "Politics"/>
+					<figcaption>
+						<div class="photo-details">
+							<h4>Politics News</h4>
+						</div>
+					</figcaption>
+			</figure>
+
+			
+			<figure id = "2" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+				<img src="5.jpg" alt="This is my work" class="img-responsive img-category" value = "Health"/>
+					<figcaption>
+						<div class="photo-details">
+							<h4>Health News</h4>
+						</div>
+					</figcaption>
+			</figure>
+			
+			<figure id = "3"class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+				<img src="6.jpg" alt="This is my work" class="img-responsive img-category" value = "Entertainment"/>
+					<figcaption>
+						<div class="photo-details">
+							<h4>Entertainment News</h4>
+						</div>
+					</figcaption>
+				
+			</figure>
+			
+			<figure id = "4" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+				<img src="7.jpg" alt="This is my work" class="img-responsive img-category" value = "Tech"/>
+					<figcaption>
+						<div class="photo-details">
+							<h4>Technology News</h4>
+						</div>
+
+					</figcaption>
+			</figure>
+		
+			
+				
+			<figure id = "5"class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+				<img src="9.jpg" alt="This is my work" class="img-responsive img-category" value = "Travel"/>
+					<figcaption>
+						<div class="photo-details">
+							<h4>Travel News</h4>
+						</div>
+					</figcaption>
+			</figure>
+
+			<figure id = "6"class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+				<img src="10.jpg" alt="This is my work" class="img-responsive img-category" value = "Sports"/>
+					<figcaption>
+						<div class="photo-details">
+							<h4>Sports News</h4>
+						</div>
+					</figcaption>
+			</figure>
+		</div>
+	</div>
+	
+	<h1 style = "text-align:center;"> Selected News Categories </h1>
+	
+	<div class = "selectedCategories">
+
+
+	
+		
+	</div>
+	<button class="goto_button" value="Click" onClick="window.open('Home.html')"><span>Goto News </span></button>
+	
+	<button class="edit_button" value="Click"><span> Edit Selected Categories </span></button>
+	
+
+
+</body>
+</html>

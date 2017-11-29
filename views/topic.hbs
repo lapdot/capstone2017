@@ -1,0 +1,20 @@
+<script type="text/javascript">
+$(document).ready(function() {
+});
+</script>
+
+<div class="container">
+  <h1>{{topic_first_letter_uppercased}} News</h1>
+  {{#each news}}
+    <button type="button" class="btn btn-info head-btn" data-toggle="collapse" data-target="#demo">{{{this.Headline}}}</button>
+    <div id="demo" class="collapse">
+    	<h4> Reporter Name : {{{this.ReporterName}}}</h4>
+    	<h4> Pub Time : {{{this.PubTime}}}</h4>
+    	<h4> Source : {{{this.Source}}}</h4>
+    	<h5> {{{this.Paragraph1}}} </h5>
+    	<h5> {{{this.Paragraph2}}} </h5>
+     	<a href="{{{this.URL}}}"> Click here to view the detailed news </a>
+    </div>
+    <br>
+  {{/each}}
+</div>

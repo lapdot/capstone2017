@@ -1,0 +1,84 @@
+<h1 class = "signUpHead"> Create your newsFeeder account </h1>
+
+<div class = "signUp">
+	<fieldset style = "margin-top:10px;">
+		<legend style="color: white;">Fill your information </legend>
+		<form role='form' action="/signup" method="post">
+			<table>
+				<tr>
+					<th> Name </th>
+				</tr>
+				<tr>
+					<td> <input type="text" placeholder="firstName" name="first" required> <input type="text" placeholder="lastName" name="last"  required> </td>
+					<td> </td>
+				</tr>
+
+				<tr>
+					<th> Choose your unique Username </th>
+				</tr>
+				<tr>
+					<td> <input type="text" placeholder="Champion" name="username" maxlength="25" required> </td>
+				</tr>
+
+				<tr>
+					<th> E-mail address </th>
+				</tr>
+				<tr>
+					<td> <input type="email" placeholder="xyz@gmail.com" maxlength="64" required> </td>
+				</tr>
+
+				<tr>
+					<th> Security question-1 </th>
+				</tr>
+				<tr>
+					<td><select>
+					  <option>Which is your birth city?</option>
+					  <option>What is your favourite colour?</option>
+					  <option>What is your pet's name?</option>
+					  <option>Who is your favourite actor?</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td> <input type="text" name="security1" maxlength="25" required> </td>
+				</tr>
+
+				<tr>
+					<th> Security question-2 </th>
+				</tr>
+				<tr>
+					<td><select>
+					  <option>Which is your birth city?</option>
+					  <option>What is your favourite colour?</option>
+					  <option>What is your pet's name?</option>
+					  <option>Who is your favourite actor?</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td> <input type="text" name="security2" maxlength="25" required> </td>
+				</tr>
+
+				<tr>
+					<th> Create Password </th>
+				</tr>
+				<tr>
+					<td> <input type="password" name="password"required> </td>
+				</tr>
+
+				<tr>
+					<th> Confirm your Password </th>
+				</tr>
+				<tr>
+					<td> <input type="password" name="password2"required> </td>
+				</tr>
+				<tr>
+					<td style = "text-align:center;padding-top:15px;">
+            <button class = "createAccount" type="submit"> Create Account </button>
+          </td>
+				</tr>
+			</table>
+
+		</form>
+	</fieldset>
+</div>
+<a style = "margin-left:43%;margin-bottom:20px;padding-top:10px;"href = "PasswordReset.html"> Forgot Password? </a>
+<hr>

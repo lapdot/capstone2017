@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head lang = "en">
+	<meta charset="utf-8">
+    <title>NewsFeeder_Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="styleSheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css" />
+
+	<Script Language=JavaScript>
+		
+		var mytmp = new Array();
+		function dispArray()
+		{
+			window.opener.xferArray();
+			var tmp =  new Array();
+			tmp = window.opener.myArray;
+			document.getElementById('1').innerHTML = tmp[0];
+			document.getElementById('2').innerHTML = tmp[1];
+			document.getElementById('3').innerHTML = tmp[2];
+			
+			mytmp = tmp;
+			
+		}
+		//window.onload = dispArray;
+		
+		function getNewsCat(Clicked_ID)
+		{
+			var a = document.getElementById(Clicked_ID).innerHTML;
+		
+			
+			if(a == "Home")
+			{
+			
+				window.open("Home.html");
+			
+			}
+			if(a == "Sports")
+			{
+			
+				window.open("Sports.html");
+			
+			}
+			if(a == "Tech")
+			{
+			
+				window.open("Tech.html");
+			
+			}
+			if(a == "Opinion")
+			{
+			
+				window.open("Opinion.html");
+			
+			}
+			if(a == "Politics")
+			{
+			
+				window.open("Politics.html");
+			
+			}
+			if(a == "Entertainment")
+			{
+			
+				window.open("Entertainment.html");
+			
+			}
+			if(a == "Travel")
+			{
+			
+				window.open("Travel.html");
+			
+			}
+			if(a == "Health")
+			{
+			
+				window.open("Health.html");
+			
+			}
+			
+		
+		}
+		
+		function xferArray()
+		{
+			myArray = new Array();
+			myArray = mytmp;
+		}
+	</Script>
+	
+</head>
+<body onload = "dispArray()">	
+
+		<div class = "userInfo">
+			<fieldset style = "margin-top:10px;">
+				<legend style="color: white;">User Information </legend>
+				<form>
+					<table>
+						<tr>
+							<th> Name </th> 
+						</tr>
+						<tr>
+							<td> <input type="text" name="first" required> <input type="text" placeholder="lastName" name="last"  required> </td>
+							<td> </td>
+						</tr>
+						
+						<tr>
+							<th>Your unique Username </th> 
+						</tr>
+						<tr>
+							<td> <input type="text"  name="userName" maxlength="25" required> </td>	
+						</tr>
+						
+						<tr>
+							<th> E-mail address </th> 
+						</tr>
+						<tr>
+							<td> <input type="email" maxlength="64" required> </td>	
+						</tr>
+						
+						
+						
+						<tr>
+							<th> Security question-1 </th> 
+						</tr>
+						<tr>
+							<td><select>
+							  <option>Which is your birth city?</option>
+							  <option>What is your favourite colour?</option>
+							  <option>What is your pet's name?</option>
+							  <option>Who is your favourite actor?</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td> <input type="text" name="security1" maxlength="25" required> </td>	
+						</tr>
+						
+						<tr>
+							<th> Security question-2 </th> 
+						</tr>
+						<tr>
+							<td><select>
+							  <option>Which is your birth city?</option>
+							  <option>What is your favourite colour?</option>
+							  <option>What is your pet's name?</option>
+							  <option>Who is your favourite actor?</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td> <input type="text" name="security2" maxlength="25" required> </td>	
+						</tr>
+						
+						
+						
+						
+						<tr>
+							<th> Created Password </th> 
+						</tr>
+						<tr>
+							<td> <input type="password" name="psw"required> </td>	
+						</tr>
+						
+						<tr>
+							<td style = "text-align:center;padding-top:15px;"> <button  class = "createAccount"type="button" onclick="alert('Hello World!')"> Create Account </button> </td>
+						</tr>
+					</table>
+				
+				</form>
+			</fieldset>
+		</div>
+
+
+<nav id="nav-multi-square" class="nav-multi-square nav-intro opacity-0">
+	
+	<span class="nav-square-current nav-square" >
+		<span id = "4" class = "dot" onclick = "getNewsCat(this.id)">Home</span>
+	</span>
+
+	
+	
+	<span class="nav-square">
+		<span id = "1" class = "dot" onclick = "getNewsCat(this.id)"> </span>
+	</span>
+
+	<span class="nav-square">
+		<span  id = "2" class = "dot" onclick = "getNewsCat(this.id)"></span>
+	</span>
+
+	<span class="nav-square">
+		<span  id = "3" class = "dot" onclick = "getNewsCat(this.id)"></span>
+	</span>
+</nav>
+
+
+</body>
+</html>

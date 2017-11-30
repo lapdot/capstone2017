@@ -12,7 +12,7 @@
   <body>
     <div class="account_tips">
       {{#if user}}
-        <p>You are currently logged in as {{{user.username}}}
+        <p>You are currently logged in as {{{user.username}}}</p>
         <a href="/logout">Logout</a>
       {{else}}
         <a href="/login">Login</a>
@@ -23,7 +23,7 @@
     {{{body}}}
     <nav id="nav-multi-square" class="nav-multi-square nav-intro opacity-0">
       <span class="nav-square-current nav-square" >
-        <span id = "4" class = "dot" onclick = "">Home</span>
+        <span id = "4" class = "dot" onclick="window.location.href='/'">Home</span>
       </span>
       <span class="nav-square">
         <span id = "1" class = "dot" onclick = ""> </span>

@@ -6,8 +6,8 @@ $(document).ready(function() {
 <div class="container">
   <h1>{{topic_first_letter_uppercased}} News</h1>
   {{#each news}}
-    <button type="button" class="btn btn-info head-btn" data-toggle="collapse" data-target="#demo">{{{this.Headline}}}</button>
-    <div id="demo" class="collapse">
+    <button type="button" class="btn btn-info head-btn" data-toggle="collapse" data-target="#demo{{@index}}">{{{this.Headline}}}</button>
+    <div id="demo{{@index}}" class="collapse">
     	<h4> Reporter Name : {{{this.ReporterName}}}</h4>
     	<h4> Pub Time : {{{this.PubTime}}}</h4>
     	<h4> Source : {{{this.Source}}}</h4>

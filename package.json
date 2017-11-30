@@ -11,6 +11,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.2",
     "express-session": "~1.15.6",
+    "forever": "^0.15.3",
     "hbs": "~4.0.1",
     "mongodb": "~2.2.33",
     "mongoose": "~4.13.5",

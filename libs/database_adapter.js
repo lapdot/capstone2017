@@ -31,9 +31,9 @@ const readCrawlerResult = () => {
   return readFile(config.crawler.resultLocation).catch((err) => {
     console.log("Reading the crawler's result fails.");
   }).then((crawlerResult) => {
-    console.log("Read the crawler's result successfully.");
     return JSON.parse(crawlerResult);
   }).then((resultArray) => {
+    console.log("Read the crawler's result successfully.");
     return New.create(resultArray);
   });
 }

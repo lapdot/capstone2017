@@ -1,10 +1,17 @@
+const path = require('path');
+
 const passport = require('passport');
 
 const Account = require('./../models/account');
 
 module.exports = (router) => {
   router.get('/', (req, res) => {
-    res.render('index', { user : req.user });
+    if (req.user) {
+      res.render('index', { user : req.user });
+    } else {
+      res.sendFile(path.join(__dirname, './../public', 'first.html'));
+    }
+
   });
 
   router.get('/signup', (req, res) => {

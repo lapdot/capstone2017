@@ -68,7 +68,6 @@ div.signUp{
 }
 
 div.PasswordReset{
-	background-color:CornflowerBlue ;
 	position : relative;
 	width:700px;
 	margin-left:25%;
@@ -304,7 +303,7 @@ figure:hover figcaption {
 
 .nav-multi-square {
   text-align: center;
-  position: fixed;
+  position: relative;
   bottom: 0;
   height: 6.5rem;
   width: 100%;

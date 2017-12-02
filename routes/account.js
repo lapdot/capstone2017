@@ -34,9 +34,10 @@ module.exports = (router) => {
     res.render('login', { user : req.user });
   });
 
-  router.post('/login', passport.authenticate('local'), (req, res) => {
-    res.redirect('/');
-  });
+  router.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+  }));
 
   router.get('/logout', (req, res) => {
     req.logout();

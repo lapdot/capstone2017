@@ -55,6 +55,12 @@ const initDB = () => {
       console.log("Initialization fails.");
     });
   });
+  process.on('SIGINT', () => {
+    mongoose.connection.close(() => {
+      console.log('Mongoose disconnected on app termination');
+      process.exit(0);
+    });
+  });
 }
 
 const viewNews = () => {

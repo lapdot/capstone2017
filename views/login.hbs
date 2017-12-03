@@ -32,33 +32,35 @@
 <body background="Login_background.jpg" style="background-repeat: no-repeat; background-size: 100%;" align="Left" class="body">
   <th width="100" scope="row" align="Center">
     <p><img src="Logo.gif" width="100" height="100" alt=""/></p>
+  </th>
   <table width="30%" border="0" align="center">
     <tbody>
       <div class = "signIn">
         <fieldset style = "margin:auto;width:400px">
           <legend style="color: white; font-size: 30px;">Sign In</legend>
-          <form role='form' action="/login" method="post">
+          <p>{{{info}}}</p>
+          <form role="form" method="post">
             <tr>
               <th scope="row">User Name</th>
                 <td> <input type="text" placeholder="UserName" name="username" required></td>
             </tr>
             <tr>
-              <th width="32%" scope="row">Password</th><td><input type="password" placeholder="Password" name="password" required></td>
+              <th width="32%" scope="row">Password</th><td><input type="password" placeholder="Password" name="password"></td>
             </tr>
             <tr>
               <td height="20"  colspan="4" align="center" >&nbsp;</td>
             </tr>
             <tr>
               <td height="20"  colspan="4" align="center" >
-                <a href="/forget_password" ><span><strong>Forgot Password?</strong></span></a>
-                <button class = "SignInAccount" type="submit"  > Sign In </button>
+                <button formaction="/forget_password" type="submit"><span><strong>Forgot Password?</strong></span></button>
+                <button class = "SignInAccount" formactiontype="/signin" type="submit"> Sign In </button>
               </td>
             </tr>
           </form>
         </fieldset>
       </div>
     </tbody>
-  </table></th>
+  </table>
   <p class="Footer">SEND YOUR FEEDBACK TO: <a href="mailto:2017newsfeeder@gmail.com">2017newsfeeder@gmail.com</a></p>
 </body>
 </html>

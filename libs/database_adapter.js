@@ -6,7 +6,7 @@ const Q = require('q');
 const config = require('./../config');
 
 const New = require('./../models/new');
-const User = require('./../models/account');
+const Account = require('./../models/account');
 
 const initCollection = (collectionName) => {
   return mongoose.connection.db.dropCollection(collectionName).catch((err) => {
@@ -21,6 +21,7 @@ const resetDB = () => {
     return initCollection(name);
   })).then(() => {
     console.log("Initializes the database successfully.");
+    Account.register(new Account({ username : 'any' }), 'any', (err, account) => {});
   }, () => {
     console.log("Initialization of the database fails.");
   });

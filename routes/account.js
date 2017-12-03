@@ -18,29 +18,79 @@ module.exports = (router) => {
   })
 
   router.get('/signup', (req, res) => {
-    res.render('signup', {});
+    res.render('signup', { info: req.flash('signup') });
   });
 
-  router.post('/signup', (req, res) => {
+  router.post('/signup', (req, res, next) => {
+    console.log("POST /signup");
+    console.log(req.body.first);
+    console.log(req.body.last);
+    console.log(req.body.username);
+    console.log(req.body.email);
+    console.log(req.body.password);
+    console.log(req.body.password2);
+    console.log(req.body.question1);
+    console.log(req.body.security1);
+    console.log(req.body.question2);
+    console.log(req.body.security2);
+    next();
+  }, (req, res, next) => {
+    if (req.body.password !== req.body.password2) {
+      req.flash('signup', 'Two passwords are not equal.');
+      res.redirect('signup');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
     Account.register(new Account({ username : req.body.username }), req.body.password, (err, account) => {
       if (err) {
         return res.render('signup', { account : account });
       }
 
-      passport.authenticate('local')(req, res, () => {
-        res.redirect('/');
+      account.first = req.body.first;
+      account.last = req.body.last;
+      account.password = req.body.password;
+      account.question1 = req.body.question1;
+      account.security1 = req.body.security1;
+      account.question2 = req.body.question2;
+      account.security2 = req.body.security2;
+
+      account.save().then(() => {
+        passport.authenticate('local')(req, res, () => {
+          res.redirect('/');
+        });
+      }, (err) => {
+        next(err);
       });
     });
   });
 
   router.get('/login', (req, res) => {
-    res.render('login', { user : req.user });
+    res.render('login', { info: req.flash('login') });
   });
 
-  router.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-  }));
+  router.post('/login', (req, res, next) => {
+    console.log("POST /login");
+    console.log(req.body.username);
+    console.log(req.body.password);
+    next();
+  }, (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        req.flash('login', 'The username or the password is wrong.');
+        return res.redirect('/login');
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect('/');
+      });
+    }) (req, res, next);
+  });
 
   router.get('/logout', (req, res) => {
     req.logout();
@@ -59,8 +109,55 @@ module.exports = (router) => {
     res.render('update_profile', {});
   });
 
-  router.get('/forget_password', (req, res, next) => {
+  router.post('/forget_password', (req, res, next) => {
+    console.log("POST /forget_password");
     console.log(req.body.username);
-    res.render('reset_password', {});
+    next();
+  }, (req, res, next)=> {
+    Account.findOne({ username: req.body.username }).catch((err) => {
+      next(err);
+    }).then((account) => {
+      if (!account) {
+        req.flash('login', 'The username does not exist.');
+        res.redirect('/login');
+      } else {
+        res.render('reset_password', {username: req.body.username});
+      }
+    })
+  });
+
+  router.post('/reset_password', (req, res, next) => {
+    console.log("POST /reset_password");
+    console.log(req.body.username);
+    console.log(req.body.security1);
+    console.log(req.body.security2);
+    console.log(req.body.password);
+    console.log(req.body.password2);
+    next();
+  }, (req, res, next) => {
+    Account.findOne({ username: req.body.username }).catch((err) => {
+      next(err);
+    }).then((account) => {
+      if (!account) {
+        req.flash('login', 'The username does not exist.');
+        res.redirect('/login');
+      } else {
+        console.log("HERE8");
+        console.log(account.security1);
+        console.log(account.security2);
+        account.setPassword(req.body.password, (err) => {
+          if (err) {
+            next(err);
+          } else {
+            account.save().then(() => {
+              req.flash('login', 'Reset your password successfully.');
+              res.redirect('/login');
+            }, (err) => {
+              next(err);
+            });
+          }
+        });
+      }
+    });
   });
 }

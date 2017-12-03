@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var flash = require('connect-flash')
 
 const Q = require('q');
 
@@ -31,6 +32,7 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // passport config
 var LocalStrategy = require('passport-local').Strategy;

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Newsfeeder</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel='stylesheet' type="text/css" href='/stylesheets/style.css' />
+</head>
+<body data-gr-c-s-loaded="true" background="Homepage_background.jpg" style="background-repeat: repeat; background-size: 100%;" >
+  <div>
+    <table>
+      <th width="100" scope="row"><img src="Logo.gif" width="100" height="100" alt=""/></th>
+    </table>
+  </div>
+  <div class="container cat_img">
+
+    <Center>
+      <h1> Please Select Three Favorite Categories </h1>
+    </Center>
+
+    <div class="row">
+      <Form>
+        <figure id="1" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+          <img src="/3.png" alt="This is my work" class="img-responsive img-category" value="Politics">
+            <figcaption>
+              <div class="photo-details">
+                <h4>Politics News</h4>
+                <input type="checkbox" id="Politics" name="Politics" value="Politics" style="width:30px;height: 30px;">
+                <h2 style="color:white;">This is your current Selection</h2>
+              </div>
+            </figcaption>
+        </figure>
+        <figure id="2" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+          <img src="/5.jpg" alt="This is my work" class="img-responsive img-category" value="Health">
+            <figcaption>
+              <div class="photo-details">
+                <h4>Health News</h4>
+                <input type="checkbox" id="health" name="health" value="health" style="width:30px;height: 30px;">
+
+              </div>
+            </figcaption>
+        </figure>
+        <figure id="3" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+          <img src="/6.jpg" alt="This is my work" class="img-responsive img-category" value="Entertainment">
+            <figcaption>
+              <div class="photo-details">
+                <h4>Entertainment News</h4>
+                <input type="checkbox" id="Entertainment" name="Entertainment" value="Entertainment" style="width:30px;height: 30px;">
+              </div>
+            </figcaption>
+
+        </figure>
+        <figure id="4" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+          <img src="/7.jpg" alt="This is my work" class="img-responsive img-category" value="Tech">
+            <figcaption>
+              <div class="photo-details">
+                <h4>Technology News</h4>
+                <input type="checkbox" id="Technology" name="Technology" value="Technology" style="width:30px;height: 30px;">
+              </div>
+            </figcaption>
+        </figure>
+        <figure id="5" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+          <img src="/9.jpg" alt="This is my work" class="img-responsive img-category" value="Travel">
+            <figcaption>
+              <div class="photo-details">
+                <h4>Travel News</h4>
+                <input type="checkbox" id="Travel" name="Travel" value="Travel" style="width:30px;height: 30px;">
+              </div>
+            </figcaption>
+        </figure>
+        <figure id="6" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+          <img src="/10.jpg" alt="This is my work" class="img-responsive img-category" value="Sports">
+            <figcaption>
+              <div class="photo-details">
+                <h4>Sports News</h4>
+                <input type="Checkbox" id="Sports" name="Sports" value="Sports" style="width:30px;height: 30px;">
+              </div>
+            </figcaption>
+        </figure>
+        <figure id="7" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+          <img src="11.jpg" alt="This is my work" class="img-responsive img-category" value="opinion">
+            <figcaption>
+              <div class="photo-details">
+                <h4>Opinion News</h4>
+                <input type="Checkbox" id="opinion" name="opinion" value="opinion" style="width:30px;height: 30px;">
+              </div>
+            </figcaption>
+        </figure>
+      </Form>
+    </div>
+  </div>
+  <div class="selectedCategories"></div>
+  <button id="btn" class="goto_button" value="Click"><span>Goto News</span></button>
+<!--script>
+ $('#btn').click(function() {
+var x=($(":checkbox:checked").length);
+if (x==3){$(location).attr('href', 'News Page.html')
+}
+else{alert("Please make sure 3 categories are selected");
+}
+});
+</script-->
+  {{> bottom_navigation }}
+  </body>
+
+</html>

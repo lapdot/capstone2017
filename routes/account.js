@@ -7,12 +7,15 @@ const Account = require('./../models/account');
 module.exports = (router) => {
   router.get('/', (req, res) => {
     if (req.user) {
-      res.render('index', { user : req.user });
+      res.render('home', { user: req.user });
     } else {
       res.sendFile(path.join(__dirname, './../public', 'first.html'));
     }
-
   });
+
+  router.get('/update', (req, res) => {
+    res.render('home_update', { user: req.user });
+  })
 
   router.get('/signup', (req, res) => {
     res.render('signup', {});

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Newsfeeder</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .Footer {
+    	font-family: Constantia, Lucida Bright, DejaVu Serif, Georgia, serif;
+    	position: absolute; bottom: 5px;
+    	color: black;
+    	font-size: 15px;
+    }
+    .SignBackIn {
+      display: inline-block;
+      border-radius: 4px;
+      background-color:blue;
+      border: none;
+      color: white;
+      text-align: center;
+      font-size: 20px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+  </style>
+</head>
+	<body background="Login_background.jpg" style="background-repeat: no-repeat; background-size: 100%;" align="Left" class="body">
+
+	<th width="100" scope="row" align="Center"><p><img src="Logo.gif" width="100" height="100" alt=""/></p>
+  	<table width="30%" border="0" align="center">
+      <tbody>
+	       <div class = "signOut">
+           <tr>
+             <th scope="row">&nbsp;</th>
+             <td width="530">
+               <h2><p class="H2Font">You have successfully Signed Out!</p></h2>
+             </td>
+             <td width="207">&nbsp;</td>
+           </tr>
+           <tr>
+             <td height="20"  colspan="4" align="center" >&nbsp;</td>
+           </tr>
+           <tr>
+	           <form method="get" action="/login.html">
+	             <td height="20"  colspan="4" align="center" ><button class = "SignBackIn" type="submit"> Sign Back In </button> </td>
+	           </form>
+		       </tr>
+	       </div>
+       </tbody>
+     </table>
+   </th>
+   <p class="Footer">SEND YOUR FEEDBACK TO: <a href="mailto:2017newsfeeder@gmail.com">2017newsfeeder@gmail.com</a></p>
+</body>
+</html>

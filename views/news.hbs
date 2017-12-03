@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang = "en">
+	<meta charset="utf-8">
+  <title>Newsfeeder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+</head>
+<body onload = "dispArray()" data-gr-c-s-loaded="true" background="Newspage_background.jpg" style="background-repeat: repeat; background-size: 100%;">
+  <table>
+    <th width="100" scope="row"><img src="Logo.gif" width="100" height="100" alt=""/></th>
+  </table>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+  });
+  </script>
+
+  {{> account_tip }}
+
+  {{#each categoried_news as |topic_news topic_index|}}
+  <div class="container">
+    <h1>{{topic_news.topic_first_letter_uppercased}} News</h1>
+    {{#each topic_news.news as |news news_index|}}
+      <button type="button" class="btn btn-info head-btn" data-toggle="collapse" data-target="#demo_{{{topic_news.topic}}}_{{news_index}}">{{{news.Headline}}}</button>
+      <div id="demo_{{{topic_news.topic}}}_{{news_index}}" class="collapse">
+      	<h4> Reporter Name : {{{news.ReporterName}}}</h4>
+      	<h4> Pub Time : {{{news.PubTime}}}</h4>
+      	<h4> Source : {{{news.Source}}}</h4>
+      	<h5> {{{news.Paragraph1}}} </h5>
+      	<h5> {{{news.Paragraph2}}} </h5>
+       	<a href="{{{news.URL}}}"> Click here to view the detailed news </a>
+      </div>
+      <br>
+    {{/each}}
+  </div>
+  {{/each}}
+</body>
+</html>

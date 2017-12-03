@@ -1,6 +1,9 @@
 <div class="account_tip">
   {{#if user}}
-    <p>You are currently logged in as {{{user.username}}}</p>
+    <span>You are currently logged in as {{{user.username}}}</span>
+    <br />
+    <a href="/update_profile">Update Profile</a></p>
+    <br />
     <a href="/logout">Logout</a>
   {{else}}
     <a href="/login">Login</a>

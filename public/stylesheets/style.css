@@ -67,7 +67,7 @@ height:auto;
 
 h1.signUpHead{
 	text-align:center;
-	color:black  ; 
+	color:black  ;
 }
 
 div.signUp{
@@ -118,17 +118,17 @@ div.userInfo{
 
 tr{
 	text-align:left;
-	
+
 }
 th{
 	padding-top:15px;
-	
+
 }
 td{
-	
+
 }
 table{
-	
+
 	margin-left:10px;
 }
 
@@ -136,7 +136,7 @@ table{
 body {font-family: Verdana,sans-serif;margin:0}
 .mySlides
 {
-	
+
 }
 
 /* Slideshow container */
@@ -230,7 +230,7 @@ body {font-family: Verdana,sans-serif;margin:0}
 }
 
 figure {
-  padding: 1rem !important; 
+  padding: 1rem !important;
   overflow: hidden;
   cursor: pointer;
 }
@@ -286,7 +286,7 @@ figure figcaption .photo-details h4 {
   color: white;
   padding-left: 15px;
   margin-bottom: 0.3rem;
-} 
+}
 
 
 figure:hover:after {
@@ -315,7 +315,7 @@ figure:hover figcaption {
 
 .nav-multi-square {
   text-align: center;
-  position: relative;
+  position: absolute;
   bottom: 0;
   height: 6.5rem;
   width: 100%;
@@ -437,7 +437,7 @@ figure:hover figcaption {
 
 .cat_btn{
 width:20%;
-height:20%;	
+height:20%;
  padding: 15px 25px;
   font-size: 24px;
   text-align: center;
@@ -455,7 +455,7 @@ height:20%;
 
 .cat_btn1{
 width:20%;
-height:20%;	
+height:20%;
 
  padding: 15px 25px;
   font-size: 24px;
@@ -473,7 +473,7 @@ height:20%;
 }
 .cat_btn2{
 width:20%;
-height:20%;	
+height:20%;
 
  padding: 15px 25px;
   font-size: 24px;
@@ -491,7 +491,7 @@ height:20%;
 }
 .cat_btn3{
 width:20%;
-height:20%;	
+height:20%;
 
  padding: 15px 25px;
   font-size: 24px;
@@ -509,7 +509,7 @@ height:20%;
 }
 .cat_btn4{
 width:20%;
-height:20%;	
+height:20%;
 
  padding: 15px 25px;
   font-size: 24px;
@@ -527,7 +527,7 @@ height:20%;
 }
 .cat_btn5{
 width:20%;
-height:20%;	
+height:20%;
 
  padding: 15px 25px;
   font-size: 24px;
@@ -545,7 +545,7 @@ height:20%;
 }
 .cat_btn6{
 width:20%;
-height:20%;	
+height:20%;
 
  padding: 15px 25px;
   font-size: 24px;
@@ -564,7 +564,7 @@ height:20%;
 .cat_btn7{
 
 width:20%;
-height:20%;	
+height:20%;
  padding: 15px 25px;
   font-size: 24px;
   text-align: center;
@@ -581,7 +581,7 @@ height:20%;
 }
 .cat_btn8{
 width:20%;
-height:20%;	
+height:20%;
 
  padding: 15px 25px;
   font-size: 24px;
@@ -600,7 +600,7 @@ height:20%;
 
 .cat_btn9{
 width:20%;
-height:20%;	
+height:20%;
 
  padding: 15px 25px;
   font-size: 24px;
@@ -712,5 +712,5 @@ height:20%;
 	border-radius: 4px;
 	margin-top:10px;
 	margin-bottom:10px;
-	
+
 }

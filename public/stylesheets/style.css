@@ -29,6 +29,17 @@ top:5px;
 left:70%;
 height:auto;
 }
+
+.signOut{
+position:absolute;
+width:200px;
+top:5px;
+align:center;
+height:auto;
+
+}
+
+
 .signInAccount{
   padding: 15px 10px;
   font-size: 15px;
@@ -68,6 +79,7 @@ div.signUp{
 }
 
 div.PasswordReset{
+	align: right
 	position : relative;
 	width:700px;
 	margin-left:25%;

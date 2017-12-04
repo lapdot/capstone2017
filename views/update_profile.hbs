@@ -43,16 +43,17 @@
     <fieldset style="margin-top:10px;">
     <legend style="color: white; align=center;"><strong>Fill your information</strong></legend>
       <form role="form" action="" method="post">
+        <input type="hidden" name="username" value="{{{username}}}"required></input>
         <table align="center">
           <tbody>
             <tr>
               <th>Update your first Security question</th>
               <th>
-                <select class="box">
-                  <option>Which is your birth city?</option>
-                  <option>What is your favourite colour?</option>
-                  <option>What is your pet's name?</option>
-                  <option>Who is your favourite actor?</option>
+                <select name="question1" class="box">
+                  <option value="q1">Which is your birth city?</option>
+                  <option value="q2">What is your favourite colour?</option>
+                  <option value="q3">What is your pet's name?</option>
+                  <option value="q4">Who is your favourite actor?</option>
                 </select>
               </th>
             </tr>
@@ -63,12 +64,12 @@
             <tr>
               <th>Update your second Security question</th>
               <th>
-                <select class="box">
-                  <option>Which is your birth city?</option>
-                  <option>What is your favourite colour?</option>
-                  <option>What is your pet's name?</option>
-                  <option>Who is your favourite actor?</option>
-                </select>
+                <select name="question2" class="box">
+  						    <option value="q1">Which is your birth city?</option>
+                  <option value="q2">What is your favourite colour?</option>
+                  <option value="q3">What is your pet's name?</option>
+                  <option value="q4">Who is your favourite actor?</option>
+  						  </select>
               </th>
             </tr>
             <tr>

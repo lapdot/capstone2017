@@ -23,7 +23,7 @@
 
     <div class="row">
       <Form>
-        <figure id="1" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+        <figure id="1" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="/3.png" alt="This is my work" class="img-responsive img-category" value="Politics">
             <figcaption>
               <div class="photo-details">
@@ -32,7 +32,7 @@
               </div>
             </figcaption>
         </figure>
-        <figure id="2" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+        <figure id="2" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="/5.jpg" alt="This is my work" class="img-responsive img-category" value="Health">
             <figcaption>
               <div class="photo-details">
@@ -42,7 +42,7 @@
               </div>
             </figcaption>
         </figure>
-        <figure id="3" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+        <figure id="3" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="/6.jpg" alt="This is my work" class="img-responsive img-category" value="Entertainment">
             <figcaption>
               <div class="photo-details">
@@ -52,7 +52,7 @@
             </figcaption>
 
         </figure>
-        <figure id="4" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+        <figure id="4" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="/7.jpg" alt="This is my work" class="img-responsive img-category" value="Tech">
             <figcaption>
               <div class="photo-details">
@@ -61,7 +61,7 @@
               </div>
             </figcaption>
         </figure>
-        <figure id="5" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+        <figure id="5" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="/9.jpg" alt="This is my work" class="img-responsive img-category" value="Travel">
             <figcaption>
               <div class="photo-details">
@@ -70,7 +70,7 @@
               </div>
             </figcaption>
         </figure>
-        <figure id="6" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+        <figure id="6" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="/10.jpg" alt="This is my work" class="img-responsive img-category" value="Sports">
             <figcaption>
               <div class="photo-details">
@@ -79,7 +79,7 @@
               </div>
             </figcaption>
         </figure>
-        <figure id="7" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel">
+        <figure id="7" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="11.jpg" alt="This is my work" class="img-responsive img-category" value="opinion">
             <figcaption>
               <div class="photo-details">
@@ -93,15 +93,16 @@
   </div>
   <div class="selectedCategories"></div>
   <button id="btn" class="goto_button" value="Click"><span>Goto News</span></button>
-<!--script>
- $('#btn').click(function() {
-var x=($(":checkbox:checked").length);
-if (x==3){$(location).attr('href', 'News Page.html')
-}
-else{alert("Please make sure 3 categories are selected");
-}
-});
-</script-->
+  <script>
+  $('#btn').click(function() {
+    var x = $(":checkbox:checked").length;
+    if (x === 3) {
+      $(location).attr('href', '/news');
+    } else {
+      alert("Please make sure 3 categories are selected");
+    }
+  });
+  </script>
   {{> bottom_navigation }}
   </body>
 

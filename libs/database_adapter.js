@@ -21,7 +21,6 @@ const resetDB = () => {
     return initCollection(name);
   })).then(() => {
     console.log("Initializes the database successfully.");
-    Account.register(new Account({ username : 'any' }), 'any', (err, account) => {});
   }, () => {
     console.log("Initialization of the database fails.");
   });

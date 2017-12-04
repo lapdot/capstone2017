@@ -4,6 +4,20 @@ const passport = require('passport');
 
 const Account = require('./../models/account');
 
+const getRealQuestion = (name) => {
+  if (name === 'q1') {
+    return "Which is your birth city?"
+  } else if (name === 'q2') {
+    return "What is your favourite colour?"
+  } else if (name === 'q3') {
+    return "What is your pet's name?"
+  } else if (name === 'q4') {
+    return "Who is your favourite actor?";
+  } else {
+    return '';
+  }
+}
+
 module.exports = (router) => {
   router.get('/', (req, res) => {
     if (req.user) {
@@ -37,31 +51,46 @@ module.exports = (router) => {
   }, (req, res, next) => {
     if (req.body.password !== req.body.password2) {
       req.flash('signup', 'Two passwords are not equal.');
-      res.redirect('signup');
+      res.redirect('/signup');
     } else {
       next();
     }
   }, (req, res, next) => {
-    Account.register(new Account({ username : req.body.username }), req.body.password, (err, account) => {
+    let correct = true;
+    if (req.body.username === '') {
+      correct = false;
+      req.flash('signup', 'username is empty.');
+    } else if (req.body.password !== req.body.password2) {
+      correct = false;
+      req.flash('signup', 'Two passwords are not equal.');
+    } else if (req.body.password === '') {
+      correct = false;
+      req.flash('signup', 'Password is empty.');
+    }
+    if (!correct) {
+      res.redirect('/signup');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
+    Account.register(new Account({
+      username : req.body.username,
+      first: req.body.first,
+      last: req.body.last,
+      email: req.body.email,
+      question1: req.body.question1,
+      security1: req.body.security1,
+      question2: req.body.question2,
+      security2: req.body.security2,
+    }), req.body.password, (err, account) => {
       if (err) {
-        return res.render('signup', { account : account });
-      }
-
-      account.first = req.body.first;
-      account.last = req.body.last;
-      account.password = req.body.password;
-      account.question1 = req.body.question1;
-      account.security1 = req.body.security1;
-      account.question2 = req.body.question2;
-      account.security2 = req.body.security2;
-
-      account.save().then(() => {
+        req.flash('signup', 'The username exists.');
+        res.redirect('/signup');
+      } else {
         passport.authenticate('local')(req, res, () => {
           res.redirect('/');
         });
-      }, (err) => {
-        next(err);
-      });
+      }
     });
   });
 
@@ -106,7 +135,7 @@ module.exports = (router) => {
       next(err);
       return;
     }
-    res.render('update_profile', {});
+    res.render('update_profile', { username: req.user.username });
   });
 
   router.post('/forget_password', (req, res, next) => {
@@ -121,7 +150,13 @@ module.exports = (router) => {
         req.flash('login', 'The username does not exist.');
         res.redirect('/login');
       } else {
-        res.render('reset_password', {username: req.body.username});
+        const question1 = getRealQuestion(account.question1);
+        const question2 = getRealQuestion(account.question2);
+        res.render('reset_password', {
+          username: req.body.username,
+          question1: question1,
+          question2: question2,
+        });
       }
     })
   });
@@ -142,21 +177,43 @@ module.exports = (router) => {
         req.flash('login', 'The username does not exist.');
         res.redirect('/login');
       } else {
-        console.log("HERE8");
-        console.log(account.security1);
-        console.log(account.security2);
-        account.setPassword(req.body.password, (err) => {
-          if (err) {
-            next(err);
-          } else {
-            account.save().then(() => {
-              req.flash('login', 'Reset your password successfully.');
-              res.redirect('/login');
-            }, (err) => {
+        let correct = true;
+        if (req.body.security1 !== account.security1 || req.body.security2 !== account.security2) {
+          correct = false;
+          req.flash('reset_password', 'Answers to security questions are wrong.');
+        } else if (req.body.password !== req.body.password2) {
+          correct = false;
+          req.flash('reset_password', 'Two passwords are not equal.');
+        } else if (req.body.password === '') {
+          correct = false;
+          req.flash('reset_password', 'Password is empty.');
+        }
+        if (!correct) {
+          const question1 = getRealQuestion(account.question1);
+          const question2 = getRealQuestion(account.question2);
+          res.render('reset_password', {
+            username: req.body.username,
+            question1: question1,
+            question2: question2,
+            info: req.flash('reset_password'),
+          });
+        } else {
+          console.log("HERE8");
+          console.log(account.security1);
+          console.log(account.security2);
+          account.setPassword(req.body.password, (err) => {
+            if (err) {
               next(err);
-            });
-          }
-        });
+            } else {
+              account.save().then(() => {
+                req.flash('login', 'Reset your password successfully.');
+                res.redirect('/login');
+              }, (err) => {
+                next(err);
+              });
+            }
+          });
+        }
       }
     });
   });

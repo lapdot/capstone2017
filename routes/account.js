@@ -4,14 +4,20 @@ const passport = require('passport');
 
 const Account = require('./../models/account');
 
+const topicNames = ['politics', 'health', 'entertainment', 'tech', 'travel', 'sports', 'opinion'];
+
 const getRealQuestion = (name) => {
   if (name === 'q1') {
-    return "Which is your birth city?"
+    return "Which is your birth city?";
   } else if (name === 'q2') {
-    return "What is your favourite colour?"
+    return "What is your favourite colour?";
   } else if (name === 'q3') {
-    return "What is your pet's name?"
+    return "What is your pet's name?";
   } else if (name === 'q4') {
+    return "What is your Mothers maiden name?";
+  } else if (name === 'q5') {
+    return "What is your favourite sport?";
+  } else if (name === 'q6') {
     return "Who is your favourite actor?";
   } else {
     return '';
@@ -19,20 +25,22 @@ const getRealQuestion = (name) => {
 }
 
 module.exports = (router) => {
-  router.get('/', (req, res) => {
+  router.get('/', (req, res, next) => {
     if (req.user) {
-      console.log("UU", req.user);
-      res.render('home', {
-        username: req.user.username,
-        subscription: req.user.subscription,
+      const selectedTopics = topicNames.filter((topicName) => {
+        return req.user.subscription[topicName]
       });
+      if (selectedTopics.length === 0) {
+        res.redirect('/subscribe');
+      } else {
+        res.redirect('/news');
+      }
     } else {
       res.sendFile(path.join(__dirname, './../public', 'first.html'));
     }
   });
 
-
-  router.get('/signup', (req, res) => {
+  router.get('/signup', (req, res, next) => {
     if (req.user) {
       res.redirect('/');
     } else {
@@ -41,19 +49,6 @@ module.exports = (router) => {
   });
 
   router.post('/signup', (req, res, next) => {
-    console.log("POST /signup");
-    console.log(req.body.first);
-    console.log(req.body.last);
-    console.log(req.body.username);
-    console.log(req.body.email);
-    console.log(req.body.password);
-    console.log(req.body.password2);
-    console.log(req.body.question1);
-    console.log(req.body.security1);
-    console.log(req.body.question2);
-    console.log(req.body.security2);
-    next();
-  }, (req, res, next) => {
     if (req.user) {
       res.redirect('/');
     } else {
@@ -123,11 +118,6 @@ module.exports = (router) => {
   });
 
   router.post('/login', (req, res, next) => {
-    console.log("POST /login");
-    console.log(req.body.username);
-    console.log(req.body.password);
-    next();
-  }, (req, res, next) => {
     if (req.user) {
       res.redirect('/');
     } else {
@@ -167,6 +157,9 @@ module.exports = (router) => {
     } else {
       res.render('update_profile', {
         username: req.user.username,
+        first: req.user.first,
+        last: req.user.last,
+        email: req.user.email,
         question1: getRealQuestion(req.user.question1),
         security1: req.user.security1,
         question2: getRealQuestion(req.user.question2),
@@ -183,10 +176,32 @@ module.exports = (router) => {
       next();
     }
   }, (req, res, next) => {
-    if (req.body.password !== req.body.password2) {
-      req.flash('update_profile', 'Two passwords are not equal.');
-      res.redirect('/update_profile');
-    } else if (req.body.password === '') {
+    req.user.first = req.body.first;
+    req.user.last = req.body.last;
+    req.user.email = req.body.email;
+    req.user.security1 = req.body.security1;
+    req.user.security2 = req.body.security2;
+    req.user.save().then(() => {
+      res.redirect('/');
+    }, (err) => {
+      next(err);
+    });
+  });
+
+
+  router.get('/update_password', (req, res, next) => {
+    if (!req.user) {
+      res.redirect('/');
+    } else {
+      res.render('update_password', {
+        username: req.user.username,
+        info: req.flash('update_password'),
+      });
+    }
+  });
+
+  router.post('/update_password', (req, res, next) => {
+    if (!req.user) {
       res.redirect('/');
     } else {
       next();
@@ -198,15 +213,21 @@ module.exports = (router) => {
       if (!account) {
         res.redirect('/login');
       } else {
-        account.setPassword(req.body.password, (err) => {
+        account.changePassword(req.body.old_password, req.body.password, (err) => {
           if (err) {
-            next(err);
+            req.flash('update_password', 'Current password is wrong');
+            res.redirect('/update_password');
           } else {
-            account.save().then(() => {
-              res.redirect('/');
-            }, (err) => {
-              next(err);
-            });
+            if (req.body.password !== req.body.password2) {
+              req.flash('update_password', 'Two passwords are not equal.');
+              res.redirect('/update_password');
+            } else {
+              account.save().then(() => {
+                res.redirect('/');
+              }, (err) => {
+                next(err);
+              });
+            }
           }
         });
       }
@@ -216,10 +237,6 @@ module.exports = (router) => {
   });
 
   router.post('/forget_password', (req, res, next) => {
-    console.log("POST /forget_password");
-    console.log(req.body.username);
-    next();
-  }, (req, res, next) => {
     if (req.user) {
       res.redirect('/');
     } else {
@@ -245,14 +262,6 @@ module.exports = (router) => {
   });
 
   router.post('/reset_password', (req, res, next) => {
-    console.log("POST /reset_password");
-    console.log(req.body.username);
-    console.log(req.body.security1);
-    console.log(req.body.security2);
-    console.log(req.body.password);
-    console.log(req.body.password2);
-    next();
-  }, (req, res, next) => {
     if (req.user) {
       res.redirect('/');
     } else {
@@ -287,9 +296,6 @@ module.exports = (router) => {
             info: req.flash('reset_password'),
           });
         } else {
-          console.log("HERE8");
-          console.log(account.security1);
-          console.log(account.security2);
           account.setPassword(req.body.password, (err) => {
             if (err) {
               next(err);

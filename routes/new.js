@@ -80,6 +80,19 @@ module.exports = (router) => {
     });
   });
 
+  router.get('/subscribe', (req, res, next) => {
+    if (!req.user) {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
+    res.render('subscribe', {
+      username: req.user.username,
+      subscription: req.user.subscription,
+    });
+  });
+
   router.post('/subscribe', (req, res, next) => {
     if (!req.user) {
       res.redirect('/');

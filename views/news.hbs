@@ -15,6 +15,10 @@
   </table>
 
   <script type="text/javascript">
+	function openInNewTab(url) {
+  	var win = window.open(url, '_blank');
+  	win.focus();
+	}
   $(document).ready(function() {
   });
   </script>
@@ -32,7 +36,7 @@
       	<h4> Source : {{{news.Source}}}</h4>
       	<h5> {{{news.Paragraph1}}} </h5>
       	<h5> {{{news.Paragraph2}}} </h5>
-       	<a href="{{{news.URL}}}"> Click here to view the detailed news </a>
+       	<a onclick="openInNewTab('{{{news.URL}}}')"> Click here to view the detailed news </a>
       </div>
       <br>
     {{/each}}

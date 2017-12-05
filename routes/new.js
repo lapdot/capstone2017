@@ -1,6 +1,10 @@
 const path = require('path');
 const databaseAdapter = require('./../libs/database_adapter');
 
+const Account = require('./../models/account');
+
+const topicNames = ['politics', 'health', 'entertainment', 'tech', 'travel', 'sports', 'opinion'];
+
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -22,7 +26,6 @@ function cleanJson(data) {
 }
 
 module.exports = (router) => {
-  topicNames = ['politics', 'health', 'entertainment', 'tech', 'travel', 'sports', 'opinion'];
   topicNames.forEach((topicName) => {
     router.get('/' + topicName , (req, res) => {
       databaseAdapter.viewNews().then((output) => {
@@ -41,30 +44,60 @@ module.exports = (router) => {
   });
 
   router.get('/news', (req, res, next) => {
-    console.log("ENTER");
+    if (!req.user) {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
     databaseAdapter.viewNews().then((output) => {
       const normalizedOutput = cleanJson(output);
-      const selectedTopics = ['politics', 'health', 'entertainment'];
+      const subscription = req.user.subscription;
+      const selectedTopics = topicNames.filter((topicName) => {
+        return subscription[topicName];
+      });
+      /*
       if (selectedTopics.length !== 3) {
         console.log('Number of topics is not 3.');
         var err = new Error('Number of topics is not 3.');
         err.status = 500;
         next(err);
-      } else {
-        const categoriedOutput = selectedTopics.map((topicName) => {
-          return {
-            topic: topicName,
-            topic_first_letter_uppercased: capitalizeFirstLetter(topicName),
-            news: normalizedOutput.filter((item) => {
-              return (item.Category === capitalizeFirstLetter(topicName));
-            }),
-          }
-        });
-        res.render('news', {
-          user: req.user,
-          categoried_news: categoriedOutput,
-        });
       }
+      */
+      const categoriedOutput = selectedTopics.map((topicName) => {
+        return {
+          topic: topicName,
+          topic_first_letter_uppercased: capitalizeFirstLetter(topicName),
+          news: normalizedOutput.filter((item) => {
+            return (item.Category === capitalizeFirstLetter(topicName));
+          }),
+        }
+      });
+      res.render('news', {
+        user: req.user,
+        categoried_news: categoriedOutput,
+      });
+    });
+  });
+
+  router.post('/subscribe', (req, res, next) => {
+    if (!req.user) {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
+    topicNames.forEach((topicName) => {
+      req.user.subscription[topicName] = !!req.body[topicName];
+    });
+    req.user.save().then(() => {
+      Account.findOne({ username: req.user.username }).catch((err) => {
+        next(err);
+      }).then((account) => {
+        res.redirect('/news');
+      });
+    }, (err) => {
+      next(err);
     });
   });
 }

@@ -3,6 +3,16 @@ mongoose.Promise = require('q').Promise;
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
+const Subscription = new Schema({
+  politics: Boolean,
+  health: Boolean,
+  entertainment: Boolean,
+  tech: Boolean,
+  travel: Boolean,
+  sports: Boolean,
+  opinion: Boolean
+});
+
 const Account = new Schema({
   username: String,
   password: String,
@@ -13,6 +23,7 @@ const Account = new Schema({
   security1: String,
   question2: String,
   security2: String,
+  subscription: Subscription,
 });
 
 Account.plugin(passportLocalMongoose);

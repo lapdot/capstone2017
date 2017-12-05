@@ -21,18 +21,23 @@ const getRealQuestion = (name) => {
 module.exports = (router) => {
   router.get('/', (req, res) => {
     if (req.user) {
-      res.render('home', { user: req.user });
+      console.log("UU", req.user);
+      res.render('home', {
+        username: req.user.username,
+        subscription: req.user.subscription,
+      });
     } else {
       res.sendFile(path.join(__dirname, './../public', 'first.html'));
     }
   });
 
-  router.get('/update', (req, res) => {
-    res.render('home_update', { user: req.user });
-  })
 
   router.get('/signup', (req, res) => {
-    res.render('signup', { info: req.flash('signup') });
+    if (req.user) {
+      res.redirect('/');
+    } else {
+      res.render('signup', { info: req.flash('signup') });
+    }
   });
 
   router.post('/signup', (req, res, next) => {
@@ -48,6 +53,12 @@ module.exports = (router) => {
     console.log(req.body.question2);
     console.log(req.body.security2);
     next();
+  }, (req, res, next) => {
+    if (req.user) {
+      res.redirect('/');
+    } else {
+      next();
+    }
   }, (req, res, next) => {
     if (req.body.password !== req.body.password2) {
       req.flash('signup', 'Two passwords are not equal.');
@@ -82,6 +93,15 @@ module.exports = (router) => {
       security1: req.body.security1,
       question2: req.body.question2,
       security2: req.body.security2,
+      subscription: {
+        politics: false,
+        health: false,
+        entertainment: false,
+        tech: false,
+        travel: false,
+        sports: false,
+        opinion: false,
+      },
     }), req.body.password, (err, account) => {
       if (err) {
         req.flash('signup', 'The username exists.');
@@ -95,7 +115,11 @@ module.exports = (router) => {
   });
 
   router.get('/login', (req, res) => {
-    res.render('login', { info: req.flash('login') });
+    if (req.user) {
+      res.redirect('/');
+    } else {
+      res.render('login', { info: req.flash('login') });
+    }
   });
 
   router.post('/login', (req, res, next) => {
@@ -103,6 +127,12 @@ module.exports = (router) => {
     console.log(req.body.username);
     console.log(req.body.password);
     next();
+  }, (req, res, next) => {
+    if (req.user) {
+      res.redirect('/');
+    } else {
+      next();
+    }
   }, (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) {
@@ -121,28 +151,81 @@ module.exports = (router) => {
     }) (req, res, next);
   });
 
-  router.get('/logout', (req, res) => {
-    req.logout();
-    //res.redirect('/');
-    res.render('logout', {});
+  router.get('/logout', (req, res, next) => {
+    if (!req.user) {
+      res.redirect('/');
+    } else {
+      req.logout();
+      //res.redirect('/');
+      res.render('logout', {});
+    }
   });
 
   router.get('/update_profile', (req, res, next) => {
     if (!req.user) {
-      console.log('Forbidden');
-      var err = new Error('Forbidden');
-      err.status = 403;
-      next(err);
-      return;
+      res.redirect('/');
+    } else {
+      res.render('update_profile', {
+        username: req.user.username,
+        question1: getRealQuestion(req.user.question1),
+        security1: req.user.security1,
+        question2: getRealQuestion(req.user.question2),
+        security2: req.user.security2,
+        info: req.flash('update_profile'),
+      });
     }
-    res.render('update_profile', { username: req.user.username });
+  });
+
+  router.post('/update_profile', (req, res, next) => {
+    if (!req.user) {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
+    if (req.body.password !== req.body.password2) {
+      req.flash('update_profile', 'Two passwords are not equal.');
+      res.redirect('/update_profile');
+    } else if (req.body.password === '') {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
+    Account.findOne({ username: req.user.username }).catch((err) => {
+      next(err);
+    }).then((account) => {
+      if (!account) {
+        res.redirect('/login');
+      } else {
+        account.setPassword(req.body.password, (err) => {
+          if (err) {
+            next(err);
+          } else {
+            account.save().then(() => {
+              res.redirect('/');
+            }, (err) => {
+              next(err);
+            });
+          }
+        });
+      }
+    }, (err) => {
+      next(err);
+    });
   });
 
   router.post('/forget_password', (req, res, next) => {
     console.log("POST /forget_password");
     console.log(req.body.username);
     next();
-  }, (req, res, next)=> {
+  }, (req, res, next) => {
+    if (req.user) {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
     Account.findOne({ username: req.body.username }).catch((err) => {
       next(err);
     }).then((account) => {
@@ -169,6 +252,12 @@ module.exports = (router) => {
     console.log(req.body.password);
     console.log(req.body.password2);
     next();
+  }, (req, res, next) => {
+    if (req.user) {
+      res.redirect('/');
+    } else {
+      next();
+    }
   }, (req, res, next) => {
     Account.findOne({ username: req.body.username }).catch((err) => {
       next(err);

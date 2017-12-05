@@ -15,20 +15,19 @@
       <th width="100" scope="row"><img src="Logo.gif" width="100" height="100" alt=""/></th>
     </table>
   </div>
-  <div class="container cat_img">
+  <form id="subscribeForm">
+    <div class="container cat_img">
+      <Center>
+        <h1> Please Select Three Favorite Categories </h1>
+      </Center>
 
-    <Center>
-      <h1> Please Select Three Favorite Categories </h1>
-    </Center>
-
-    <div class="row">
-      <Form>
+      <div class="row">
         <figure id="1" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="/3.png" alt="This is my work" class="img-responsive img-category" value="Politics">
             <figcaption>
               <div class="photo-details">
                 <h4>Politics News</h4>
-                <input type="checkbox" id="Politics" name="Politics" value="Politics" style="width:30px;height: 30px;">
+                <input type="checkbox" id="Politics" name="politics" {{#if subscription.politics}}checked{{/if}} style="width:30px;height: 30px;">
               </div>
             </figcaption>
         </figure>
@@ -37,8 +36,7 @@
             <figcaption>
               <div class="photo-details">
                 <h4>Health News</h4>
-                <input type="checkbox" id="health" name="health" value="health" style="width:30px;height: 30px;">
-
+                <input type="checkbox" id="health" name="health" {{#if subscription.health}}checked{{/if}} style="width:30px;height: 30px;">
               </div>
             </figcaption>
         </figure>
@@ -47,17 +45,16 @@
             <figcaption>
               <div class="photo-details">
                 <h4>Entertainment News</h4>
-                <input type="checkbox" id="Entertainment" name="Entertainment" value="Entertainment" style="width:30px;height: 30px;">
+                <input type="checkbox" id="Entertainment" name="entertainment" {{#if subscription.entertainment}}checked{{/if}} style="width:30px;height: 30px;">
               </div>
             </figcaption>
-
         </figure>
         <figure id="4" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 sel" style="width:14%">
           <img src="/7.jpg" alt="This is my work" class="img-responsive img-category" value="Tech">
             <figcaption>
               <div class="photo-details">
                 <h4>Technology News</h4>
-                <input type="checkbox" id="Technology" name="Technology" value="Technology" style="width:30px;height: 30px;">
+                <input type="checkbox" id="Technology" name="tech" {{#if subscription.tech}}checked{{/if}} style="width:30px;height: 30px;">
               </div>
             </figcaption>
         </figure>
@@ -66,7 +63,7 @@
             <figcaption>
               <div class="photo-details">
                 <h4>Travel News</h4>
-                <input type="checkbox" id="Travel" name="Travel" value="Travel" style="width:30px;height: 30px;">
+                <input type="checkbox" id="Travel" name="travel" {{#if subscription.travel}}checked{{/if}} style="width:30px;height: 30px;">
               </div>
             </figcaption>
         </figure>
@@ -75,7 +72,7 @@
             <figcaption>
               <div class="photo-details">
                 <h4>Sports News</h4>
-                <input type="Checkbox" id="Sports" name="Sports" value="Sports" style="width:30px;height: 30px;">
+                <input type="checkbox" id="Sports" name="sports" {{#if subscription.sports}}checked{{/if}} style="width:30px;height: 30px;">
               </div>
             </figcaption>
         </figure>
@@ -84,23 +81,26 @@
             <figcaption>
               <div class="photo-details">
                 <h4>Opinion News</h4>
-                <input type="Checkbox" id="opinion" name="opinion" value="opinion" style="width:30px;height: 30px;">
+                <input type="checkbox" id="opinion" name="opinion" {{#if subscription.opinion}}checked{{/if}} style="width:30px;height: 30px;">
               </div>
             </figcaption>
         </figure>
-      </Form>
+      </div>
     </div>
-  </div>
-  <div class="selectedCategories"></div>
-  <button id="btn" class="goto_button" value="Click"><span>Goto News</span></button>
-  <script>
-  $('#btn').click(function() {
-    var x = $(":checkbox:checked").length;
-    if (x === 3) {
-      $(location).attr('href', '/news');
-    } else {
-      alert("Please make sure 3 categories are selected");
-    }
+    <div class="selectedCategories"></div>
+    <button id="btn" class="goto_button" type="submit" formaction="/subscribe" formmethod="post"><span>Goto News</span></button>
+  </form>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#subscribeForm').on('submit', function (event) {
+      var x = $(":checkbox:checked").length;
+      if (x === 3) {
+        return;
+      } else {
+        alert("Please make sure 3 categories are selected");
+        event.preventDefault();
+      }
+    });
   });
   </script>
   {{> bottom_navigation }}

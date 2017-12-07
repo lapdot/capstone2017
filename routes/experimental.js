@@ -13,6 +13,16 @@ module.exports = (router) => {
     });
   });
 
+  router.get('/jar', (req, res) => {
+    exec('java -jar /home/News.jar', (error, stdout, stderr) => {
+      if (error) {
+        res.json({ code: error.code });
+      } else {
+        res.send(stdout);
+      }
+    });
+  });
+
   router.get('/data', (req, res) => {
     databaseAdapter.viewNews().then((output) => {
       res.json(output);

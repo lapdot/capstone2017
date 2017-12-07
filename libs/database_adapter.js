@@ -65,7 +65,15 @@ const initDB = () => {
       console.log("Database connection fails");
     }
   });
+
   mongoose.connection.once('connected', () => {
+    process.on('SIGINT', () => {
+      mongoose.connection.close(() => {
+        console.log('Mongoose disconnected on app termination');
+        process.exit(0);
+      });
+    });
+
     resetDB(mongoose).then(() => {
       return readCrawlerResult();
     }).then(() => {
@@ -74,12 +82,7 @@ const initDB = () => {
       console.log("Initialization fails.");
     });
   });
-  process.on('SIGINT', () => {
-    mongoose.connection.close(() => {
-      console.log('Mongoose disconnected on app termination');
-      process.exit(0);
-    });
-  });
+
 }
 
 const viewNews = () => {

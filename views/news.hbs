@@ -25,23 +25,37 @@
 
   {{> account_tip }}
 
-  {{#each categoried_news as |topic_news topic_index|}}
-  <div class="container">
-    <h1>{{topic_news.topic_first_letter_uppercased}} News</h1>
-    {{#each topic_news.news as |news news_index|}}
-      <button type="button" class="btn btn-info head-btn" data-toggle="collapse" data-target="#demo_{{{topic_news.topic}}}_{{news_index}}">{{{news.Headline}}}</button>
-      <div id="demo_{{{topic_news.topic}}}_{{news_index}}" class="collapse">
-      	<h4> Reporter Name : {{{news.ReporterName}}}</h4>
-      	<h4> Pub Time : {{{news.PubTime}}}</h4>
-      	<h4> Source : {{{news.Source}}}</h4>
-      	<h5> {{{news.Paragraph1}}} </h5>
-      	<h5> {{{news.Paragraph2}}} </h5>
-       	<a onclick="openInNewTab('{{{news.URL}}}')"> Click here to view the detailed news </a>
-      </div>
-      <br>
-    {{/each}}
-  </div>
-  {{/each}}
+	<div style="margin-bottom:100px">
+
+	  {{#each categoried_news as |topic_news topic_index|}}
+	  <div class="container">
+	    <h1>{{topic_news.topic_first_letter_uppercased}} News</h1>
+	    {{#each topic_news.news as |news news_index|}}
+	      <button type="button" class="btn btn-info head-btn" data-toggle="collapse" data-target="#demo_{{{topic_news.topic}}}_{{news_index}}">{{{news.Headline}}}</button>
+	      <div id="demo_{{{topic_news.topic}}}_{{news_index}}" class="collapse">
+					{{#if news.ReporterName}}
+	      		<h4> Reporter Name : {{{news.ReporterName}}}</h4>
+					{{/if}}
+					{{#if news.PubTime}}
+	      		<h4> Pub Time : {{{news.PubTime}}}</h4>
+					{{/if}}
+					{{#if news.Source}}
+	      		<h4> Source : {{{news.Source}}}</h4>
+	      	{{/if}}
+					{{#if news.Paragraph1}}
+						<h5> {{{news.Paragraph1}}} </h5>
+					{{/if}}
+					{{#if news.Paragraph2}}
+						<h5> {{{news.Paragraph2}}} </h5>
+					{{/if}}
+	       	<a onclick="openInNewTab('{{{news.URL}}}')"> Click here to view the detailed news </a>
+	      </div>
+	      <br>
+	    {{/each}}
+	  </div>
+	  {{/each}}
+
+	</div>
 
   {{> bottom_navigation }}
 </body>

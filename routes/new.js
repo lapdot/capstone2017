@@ -9,17 +9,25 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function nullIfEmpty(string) {
+  if (!string) {
+    return null;
+  } else {
+    return string;
+  }
+}
+
 function cleanJson(data) {
   const cleanedJson = data.map((item) => {
     return {
       Category: item.Category,
       Headline: item.Headline,
       URL: item.URL,
-      ReporterName: item.ReporterName,
-      PubTime: item.PubTime,
-      Source: item.Source,
-      Paragraph1: item.Paragraph1,
-      Paragraph2: item.Paragraph2,
+      ReporterName: nullIfEmpty(item.ReporterName),
+      PubTime: nullIfEmpty(item.PubTime),
+      Source: nullIfEmpty(item.Source),
+      Paragraph1: nullIfEmpty(item.Paragraph1),
+      Paragraph2: nullIfEmpty(item.Paragraph2),
     }
   });
   return cleanedJson;

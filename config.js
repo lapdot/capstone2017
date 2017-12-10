@@ -6,7 +6,7 @@ module.exports = {
     collectionNames: ['news', 'accounts'],
   },
   crawler: {
-    runCommand: 'java -jar ./../News.jar',
-    resultLocation: path.join(__dirname , './../../output.json'),
+    runCommand: 'java -jar /home/News.jar',
+    resultLocation: '/home/output.json',
   },
 }

@@ -1,5 +1,7 @@
 const path = require('path');
+
 const databaseAdapter = require('./../libs/database_adapter');
+const config = require('./../config');
 
 const Account = require('./../models/account');
 
@@ -36,8 +38,9 @@ function cleanJson(data) {
 module.exports = (router) => {
   topicNames.forEach((topicName) => {
     router.get('/' + topicName , (req, res) => {
-      databaseAdapter.viewNews().then((output) => {
-        const normalizedOutput = cleanJson(output);
+      databaseAdapter.viewNews().then((data) => {
+        const updateTime = data.Time;
+        const normalizedOutput = cleanJson(data.News);
         const filteredOutput = normalizedOutput.filter((item) => {
           return (item.Category === capitalizeFirstLetter(topicName));
         });
@@ -46,6 +49,7 @@ module.exports = (router) => {
           topic: topicName,
           topic_first_letter_uppercased: capitalizeFirstLetter(topicName),
           news: filteredOutput,
+          updateTimeString: new Date(updateTime).toString(),
         });
       });
     });
@@ -58,8 +62,9 @@ module.exports = (router) => {
       next();
     }
   }, (req, res, next) => {
-    databaseAdapter.viewNews().then((output) => {
-      const normalizedOutput = cleanJson(output);
+    databaseAdapter.viewNews().then((data) => {
+      const updateTime = data.Time;
+      const normalizedOutput = cleanJson(data.News);
       const subscription = req.user.subscription;
       const selectedTopics = topicNames.filter((topicName) => {
         return subscription[topicName];
@@ -84,6 +89,7 @@ module.exports = (router) => {
       res.render('news', {
         user: req.user,
         categoried_news: categoriedOutput,
+        updateTimeString: new Date(updateTime).toString(),
       });
     });
   });
@@ -121,4 +127,5 @@ module.exports = (router) => {
       next(err);
     });
   });
+
 }

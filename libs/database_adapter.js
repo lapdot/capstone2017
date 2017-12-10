@@ -1,12 +1,15 @@
 const fs = require('fs');
+const child_process = require('child_process');
 
 const mongoose = require('mongoose');
 const Q = require('q');
 
 const config = require('./../config');
 
-const New = require('./../models/new');
+const NewsAtATime = require('./../models/new');
 const Account = require('./../models/account');
+
+let lastUpdateTime = -1.0;
 
 const initCollection = (collectionName) => {
   return mongoose.connection.db.dropCollection(collectionName).catch((err) => {
@@ -53,7 +56,12 @@ const readCrawlerResult = () => {
     return JSON.parse(crawlerResult);
   }).then((resultArray) => {
     console.log("Read the crawler's result successfully.");
-    return New.create(resultArray);
+    lastUpdateTime = Date.now();
+    const newsAtATime = new NewsAtATime({
+      Time: lastUpdateTime,
+      News: resultArray,
+    });
+    return newsAtATime.save();
   });
 }
 
@@ -86,11 +94,33 @@ const initDB = () => {
 }
 
 const viewNews = () => {
-  return New.find({});
+  return NewsAtATime.findOne({
+    Time: { $gt: lastUpdateTime - 1.0 },
+  }).catch((err) => {
+    return {
+      Time: 0.0,
+      News: [],
+    }
+  });
+}
+
+const updateNews = () => {
+  console.log("Run: ", config.crawler.runCommand);
+  const exec = Q.denodeify(child_process.exec);
+  return exec(config.crawler.runCommand).then((stdout, stderr) => {
+    return readCrawlerResult().then(() => {
+      return { success: 1 };
+    }, () => {
+      throw new Error('readCrawlerResult');
+    });
+  }, (err) => {
+    throw new Error('Crawler');
+  });
 }
 
 module.exports = {
   initDB,
   readCrawlerResult,
   viewNews,
+  updateNews,
 }

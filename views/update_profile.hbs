@@ -58,14 +58,6 @@
               <th> E-mail address </th> <th> <input type="email" name="email" maxlength="64" required value="{{email}}" class="box"> </th>
             </tr>
             <tr>
-    					<th> <label>{{{question1}}}</label></th>
-    					<th> <input type="text" name="security1" required value="{{security1}}" class="box"></th>
-    				</tr>
-    				<tr>
-              <th> <label>{{{question2}}}</label></th>
-    					<th> <input type="text" name="security2" required value="{{security2}}" class="box"></th>
-    				</tr>
-            <tr>
               <th></th>
               <th style = "text-align:center;padding-top:10px;align-self: center">
                 <button class = "UpdateProfile" type="submit">Update Profile</button>
@@ -76,5 +68,7 @@
       </form>
     </fieldset>
   </div>
+
+  {{> bottom_navigation }}
 </body>
 </html>

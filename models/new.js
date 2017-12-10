@@ -13,4 +13,9 @@ const New = new Schema({
   Paragraph2: String,
 });
 
-module.exports = mongoose.model('New', New, 'news');
+const NewsAtATime = new Schema({
+  Time: Number,
+  News: [New],
+});
+
+module.exports = mongoose.model('NewsAtATime', NewsAtATime, 'news');

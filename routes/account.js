@@ -160,10 +160,6 @@ module.exports = (router) => {
         first: req.user.first,
         last: req.user.last,
         email: req.user.email,
-        question1: getRealQuestion(req.user.question1),
-        security1: req.user.security1,
-        question2: getRealQuestion(req.user.question2),
-        security2: req.user.security2,
         info: req.flash('update_profile'),
       });
     }
@@ -179,8 +175,6 @@ module.exports = (router) => {
     req.user.first = req.body.first;
     req.user.last = req.body.last;
     req.user.email = req.body.email;
-    req.user.security1 = req.body.security1;
-    req.user.security2 = req.body.security2;
     req.user.save().then(() => {
       res.redirect('/');
     }, (err) => {

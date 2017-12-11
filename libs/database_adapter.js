@@ -9,7 +9,7 @@ const config = require('./../config');
 const NewsAtATime = require('./../models/new');
 const Account = require('./../models/account');
 
-let lastUpdateTime = -1.0;
+let lastUpdateTime = 0.0;
 
 const initCollection = (collectionName) => {
   return mongoose.connection.db.dropCollection(collectionName).catch((err) => {
@@ -86,6 +86,20 @@ const initDB = () => {
       return readCrawlerResult();
     }).then(() => {
       console.log("Initialization completes.");
+      setTimeout(() => {
+        updateNews().then((response) => {
+          console.log("RESPONSE:", response);
+        }, (err) => {
+          console.log("ERROR:", err);
+        });
+      }, 30 * 1000);
+      setInterval(() => {
+        updateNews().then((response) => {
+          console.log("RESPONSE:", response);
+        }, (err) => {
+          console.log("ERROR:", err);
+        });
+      }, 3600 * 1000);
     }, () => {
       console.log("Initialization fails.");
     });
@@ -114,6 +128,7 @@ const updateNews = () => {
       throw new Error('readCrawlerResult');
     });
   }, (err) => {
+    console.log("Crawler fails. Return code: ", err.code);
     throw new Error('Crawler');
   });
 }

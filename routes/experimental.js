@@ -30,7 +30,7 @@ module.exports = (router) => {
     });
   });
 
-  router.get('/update_db', (req, res) => {
+  router.get('/update_news', (req, res) => {
     databaseAdapter.updateNews().then(() => {
       res.send('success');
     }, (err) => {

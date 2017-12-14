@@ -36,25 +36,6 @@ function cleanJson(data) {
 }
 
 module.exports = (router) => {
-  topicNames.forEach((topicName) => {
-    router.get('/' + topicName , (req, res) => {
-      databaseAdapter.viewNews().then((data) => {
-        const updateTime = data.Time;
-        const normalizedOutput = cleanJson(data.News);
-        const filteredOutput = normalizedOutput.filter((item) => {
-          return (item.Category === capitalizeFirstLetter(topicName));
-        });
-        res.render('topic', {
-          user: req.user,
-          topic: topicName,
-          topic_first_letter_uppercased: capitalizeFirstLetter(topicName),
-          news: filteredOutput,
-          updateTimeString: new Date(updateTime).toString(),
-        });
-      });
-    });
-  });
-
   router.get('/news', (req, res, next) => {
     if (!req.user) {
       res.redirect('/');

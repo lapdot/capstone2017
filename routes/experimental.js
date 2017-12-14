@@ -37,4 +37,14 @@ module.exports = (router) => {
       res.json(err);
     });
   });
+
+  router.get('/reset_database', (req, res) => {
+    databaseAdapter.resetDB().then(() => {
+      return databaseAdapter.readCrawlerResult();
+    }).then(() => {
+      res.send('success');
+    }, (err) => {
+      res.json(err);
+    });
+  });
 }

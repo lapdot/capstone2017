@@ -76,6 +76,8 @@ module.exports = (router) => {
     if (!correct) {
       res.redirect('/signup');
     } else {
+      req.body.username = req.body.username.toLowerCase();
+      req.body.email = req.body.email.toLowerCase();
       next();
     }
   }, (req, res, next) => {
@@ -174,7 +176,7 @@ module.exports = (router) => {
   }, (req, res, next) => {
     req.user.first = req.body.first;
     req.user.last = req.body.last;
-    req.user.email = req.body.email;
+    req.user.email = req.body.email.toLowerCase();
     req.user.save().then(() => {
       res.redirect('/');
     }, (err) => {

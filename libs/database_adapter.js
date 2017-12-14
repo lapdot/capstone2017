@@ -82,9 +82,7 @@ const initDB = () => {
       });
     });
 
-    resetDB(mongoose).then(() => {
-      return readCrawlerResult();
-    }).then(() => {
+    readCrawlerResult().then(() => {
       console.log("Initialization completes.");
       setTimeout(() => {
         updateNews().then((response) => {
@@ -135,6 +133,7 @@ const updateNews = () => {
 
 module.exports = {
   initDB,
+  resetDB,
   readCrawlerResult,
   viewNews,
   updateNews,

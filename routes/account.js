@@ -104,9 +104,9 @@ module.exports = (router) => {
     } else if (req.body.last.length > 30) {
       correct = false;
       req.flash('signup', 'The length of last name cannot be more than 30.');
-    } else if (req.body.email.length > 30) {
+    } else if (req.body.email.length > 100) {
       correct = false;
-      req.flash('signup', 'The length of email cannot be more than 30.');
+      req.flash('signup', 'The length of email cannot be more than 100.');
     }
     if (!correct) {
       res.redirect('/signup');
@@ -217,6 +217,9 @@ module.exports = (router) => {
     } else if (req.body.last.length > 30) {
       correct = false;
       req.flash('update_profile', 'The length of last name cannot be more than 30.');
+    } else if (req.body.email.length > 100) {
+      correct = false;
+      req.flash('update_profile', 'The length of email cannot be more than 100.');
     };
     if (!correct) {
       res.redirect('/update_profile');

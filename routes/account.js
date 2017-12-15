@@ -24,6 +24,11 @@ const getRealQuestion = (name) => {
   }
 }
 
+const isAlphaNum = (str) => {
+  const regEx = /^[a-zA-Z0-9]+$/;
+  return str.match(regEx);
+}
+
 module.exports = (router) => {
   router.get('/', (req, res, next) => {
     if (req.user) {
@@ -71,7 +76,13 @@ module.exports = (router) => {
       req.flash('signup', 'Two passwords are not equal.');
     } else if (req.body.password === '') {
       correct = false;
-      req.flash('signup', 'Password is empty.');
+      req.flash('signup', 'The password is empty.');
+    } else if (req.body.password.length < 2 || req.body.password.length > 15) {
+      correct = false;
+      req.flash('signup', 'The length of the password must be within 2 and 15.');
+    } else if (!isAlphaNum(req.body.password)) {
+      correct = false;
+      req.flash('signup', 'The password can contains letters and digits only.');
     }
     if (!correct) {
       res.redirect('/signup');
@@ -126,6 +137,7 @@ module.exports = (router) => {
       next();
     }
   }, (req, res, next) => {
+    req.body.username = req.body.username.toLowerCase();
     passport.authenticate('local', (err, user, info) => {
       if (err) {
         return next(err);
@@ -281,6 +293,12 @@ module.exports = (router) => {
         } else if (req.body.password === '') {
           correct = false;
           req.flash('reset_password', 'Password is empty.');
+        } else if (req.body.password.length < 2 || req.body.password.length > 15) {
+          correct = false;
+          req.flash('reset_password', 'The length of the password must be within 2 and 15.');
+        }  else if (!isAlphaNum(req.body.password)) {
+          correct = false;
+          req.flash('reset_password', 'The password can contains letters and digits only.');
         }
         if (!correct) {
           const question1 = getRealQuestion(account.question1);

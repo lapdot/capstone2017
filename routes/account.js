@@ -70,19 +70,43 @@ module.exports = (router) => {
     let correct = true;
     if (req.body.username === '') {
       correct = false;
-      req.flash('signup', 'username is empty.');
+      req.flash('signup', 'The username is empty.');
+    } else if (req.body.username.length > 25) {
+      correct = false;
+      req.flash('signup', 'The length of the username cannot be more than 25.');
     } else if (req.body.password !== req.body.password2) {
       correct = false;
       req.flash('signup', 'Two passwords are not equal.');
     } else if (req.body.password === '') {
       correct = false;
       req.flash('signup', 'The password is empty.');
-    } else if (req.body.password.length < 2 || req.body.password.length > 15) {
+    } else if (req.body.password.length < 8 || req.body.password.length > 15) {
       correct = false;
-      req.flash('signup', 'The length of the password must be within 2 and 15.');
+      req.flash('signup', 'The length of the password must be within 8 and 15.');
     } else if (!isAlphaNum(req.body.password)) {
       correct = false;
       req.flash('signup', 'The password can contains letters and digits only.');
+    } else if (req.body.question1 !== 'q1' && req.body.question1 !== 'q2' && req.body.question1 !== 'q3') {
+      correct = false;
+      req.flash('signup', 'Question 1 is wrong.');
+    } else if (req.body.security1.length > 30) {
+      correct = false;
+      req.flash('signup', 'The length of Answer 1 cannot be more than 30.');
+    } else if (req.body.question2 !== 'q4' && req.body.question2 !== 'q5' && req.body.question2 !== 'q6') {
+      correct = false;
+      req.flash('signup', 'Question 2 is wrong.');
+    } else if (req.body.security2.length > 30) {
+      correct = false;
+      req.flash('signup', 'The length of Answer 2 cannot be more than 30.');
+    } else if (req.body.first.length > 30) {
+      correct = false;
+      req.flash('signup', 'The length of first name cannot be more than 30.');
+    } else if (req.body.last.length > 30) {
+      correct = false;
+      req.flash('signup', 'The length of last name cannot be more than 30.');
+    } else if (req.body.email.length > 30) {
+      correct = false;
+      req.flash('signup', 'The length of email cannot be more than 30.');
     }
     if (!correct) {
       res.redirect('/signup');
@@ -186,6 +210,20 @@ module.exports = (router) => {
       next();
     }
   }, (req, res, next) => {
+    let correct = true;
+    if (req.body.first.length > 30) {
+      correct = false;
+      req.flash('update_profile', 'The length of first name cannot be more than 30.');
+    } else if (req.body.last.length > 30) {
+      correct = false;
+      req.flash('update_profile', 'The length of last name cannot be more than 30.');
+    };
+    if (!correct) {
+      res.redirect('/update_profile');
+    } else {
+      next();
+    }
+  }, (req, res, next) => {
     req.user.first = req.body.first;
     req.user.last = req.body.last;
     req.user.email = req.body.email.toLowerCase();
@@ -226,8 +264,17 @@ module.exports = (router) => {
             req.flash('update_password', 'Current password is wrong');
             res.redirect('/update_password');
           } else {
+            let correct = true;
             if (req.body.password !== req.body.password2) {
               req.flash('update_password', 'Two passwords are not equal.');
+            } else if (req.body.password.length < 8 || req.body.password.length > 15) {
+              correct = false;
+              req.flash('update_password', 'The length of the password must be within 8 and 15.');
+            } else if (!isAlphaNum(req.body.password)) {
+              correct = false;
+              req.flash('update_password', 'The password can contains letters and digits only.');
+            }
+            if (!correct) {
               res.redirect('/update_password');
             } else {
               account.save().then(() => {
@@ -293,9 +340,9 @@ module.exports = (router) => {
         } else if (req.body.password === '') {
           correct = false;
           req.flash('reset_password', 'Password is empty.');
-        } else if (req.body.password.length < 2 || req.body.password.length > 15) {
+        } else if (req.body.password.length < 8 || req.body.password.length > 15) {
           correct = false;
-          req.flash('reset_password', 'The length of the password must be within 2 and 15.');
+          req.flash('reset_password', 'The length of the password must be within 8 and 15.');
         }  else if (!isAlphaNum(req.body.password)) {
           correct = false;
           req.flash('reset_password', 'The password can contains letters and digits only.');

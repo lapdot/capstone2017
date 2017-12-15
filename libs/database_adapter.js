@@ -23,25 +23,6 @@ const resetDB = () => {
   return Q.allSettled(config.database.collectionNames.map((name) => {
     return initCollection(name);
   })).then(() => {
-    Account.register(new Account({
-      username : "any",
-      first: "first",
-      last: "last",
-      email: "a@g.com",
-      question1: "q1",
-      security1: "aaa",
-      question2: "q4",
-      security2: "bbb",
-      subscription: {
-        "politics": false,
-        "health": false,
-        "entertainment": true,
-        "tech": false,
-        "travel": true,
-        "sports": true,
-        "opinion": false,
-      },
-    }), "any", (err, account) => {});
     console.log("Initializes the database successfully.");
   }, () => {
     console.log("Initialization of the database fails.");

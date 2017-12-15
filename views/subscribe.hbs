@@ -89,6 +89,7 @@
     </div>
     <div class="selectedCategories"></div>
     <button id="btn" class="goto_button" type="submit" formaction="/subscribe" formmethod="post"><span>Goto News</span></button>
+    <button id="clearbtn" class="goto_button" type="reset"><span>Clear Selections</span></button>
   </form>
   <script type="text/javascript">
   $(document).ready(function() {
@@ -100,6 +101,9 @@
         alert("Please make sure 3 categories are selected");
         event.preventDefault();
       }
+    });
+    $('#clearbtn').click(function(){
+        $("input[type='checkbox']").attr("checked",false);
     });
   });
   </script>

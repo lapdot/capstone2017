@@ -63,7 +63,7 @@ module.exports = (router) => {
           topic: topicName,
           topic_first_letter_uppercased: capitalizeFirstLetter(topicName),
           news: normalizedOutput.filter((item) => {
-            return (item.Category === capitalizeFirstLetter(topicName));
+            return (item.Category === capitalizeFirstLetter(topicName) && item.Headline !== '');
           }),
         }
       });

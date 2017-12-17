@@ -4,6 +4,7 @@ const databaseAdapter = require('./../libs/database_adapter');
 const config = require('./../config');
 
 module.exports = (router) => {
+  /*
   router.get('/ls', (req, res) => {
     exec('ls -al', (error, stdout, stderr) => {
       if (error) {
@@ -47,4 +48,5 @@ module.exports = (router) => {
       res.json(err);
     });
   });
+  */
 }

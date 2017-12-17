@@ -269,6 +269,7 @@ module.exports = (router) => {
           } else {
             let correct = true;
             if (req.body.password !== req.body.password2) {
+              correct = false;
               req.flash('update_password', 'Two passwords are not equal.');
             } else if (req.body.password.length < 8 || req.body.password.length > 15) {
               correct = false;

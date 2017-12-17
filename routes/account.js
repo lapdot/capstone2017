@@ -262,23 +262,23 @@ module.exports = (router) => {
       if (!account) {
         res.redirect('/login');
       } else {
-        account.changePassword(req.body.old_password, req.body.password, (err) => {
-          if (err) {
-            req.flash('update_password', 'Current password is wrong');
-            res.redirect('/update_password');
-          } else {
-            let correct = true;
-            if (req.body.password !== req.body.password2) {
-              correct = false;
-              req.flash('update_password', 'Two passwords are not equal.');
-            } else if (req.body.password.length < 8 || req.body.password.length > 15) {
-              correct = false;
-              req.flash('update_password', 'The length of the password must be within 8 and 15.');
-            } else if (!isAlphaNum(req.body.password)) {
-              correct = false;
-              req.flash('update_password', 'The password can contains letters and digits only.');
-            }
-            if (!correct) {
+        let correct = true;
+        if (req.body.password !== req.body.password2) {
+          correct = false;
+          req.flash('update_password', 'Two passwords are not equal.');
+        } else if (req.body.password.length < 8 || req.body.password.length > 15) {
+          correct = false;
+          req.flash('update_password', 'The length of the password must be within 8 and 15.');
+        } else if (!isAlphaNum(req.body.password)) {
+          correct = false;
+          req.flash('update_password', 'The password can contains letters and digits only.');
+        }
+        if (!correct) {
+          res.redirect('/update_password');
+        } else {
+          account.changePassword(req.body.old_password, req.body.password, (err) => {
+            if (err) {
+              req.flash('update_password', 'Current password is wrong');
               res.redirect('/update_password');
             } else {
               account.save().then(() => {
@@ -287,8 +287,8 @@ module.exports = (router) => {
                 next(err);
               });
             }
-          }
-        });
+          });
+        }
       }
     }, (err) => {
       next(err);
